@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ post.title }}</h1>
+<p>{{ post.body }}</p>
+<hr>
+<h2 id="comments">Comments</h2>
+{% for comment in post.comment_set.all %}
+<b>{{ comment.name }}</b> said <b>{{ comment.created_on|timesince }} ago</b>
+<p>{{ comment.comment }}</p>
+{% empty %}
+<p>Feel free to leave the first comment!</p>
+{% endfor %}
+<hr>
+<h3>Add a comment</h3>
+<form action="" method="post">
+  {% csrf_token %}
+  {{ commentform.as_p }}
+  <button type="submit">Submit</button>
+</form>
+{% endblock %}
