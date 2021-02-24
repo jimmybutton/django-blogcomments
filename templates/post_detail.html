@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>{{ post.title }}</h1>
-<p>{{ post.body }}</p>
+<p>{{ post.body|linebreaks }}</p>
 <hr>
 <h2 id="comments">Comments</h2>
 {% for comment in post.comment_set.all %}
@@ -12,10 +12,17 @@
 <p>Feel free to leave the first comment!</p>
 {% endfor %}
 <hr>
-<h3>Add a comment</h3>
+<h3 id="comment-form">Add a comment</h3>
 <form action="" method="post">
   {% csrf_token %}
-  {{ commentform.as_p }}
+  {{ form.as_p }}
   <button type="submit">Submit</button>
 </form>
+{% if form.is_bound %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("comment-form").scrollIntoView();
+  });
+</script>
+{% endif %}
 {% endblock %}
